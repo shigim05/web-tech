@@ -1,0 +1,18 @@
+﻿<html>
+    <head>
+        <title>array</title>
+        <script language="JavaScript">
+            function arrays(){
+                obj = new Array("русский язык", "литература", "изо", "общество",
+                "геометрия", "алгебра", "физика", "химия");
+                humanities = obj.slice(0,4);
+                scince = obj.slice(4,8);
+                document.write("Точные науки: ", scince+"<br>");
+                document.write("Гуманитарные науки: ", humanities+"<br>");
+            }
+        </script>
+    </head>
+    <body>
+        <script>arrays();</script>
+    </body>
+</html>

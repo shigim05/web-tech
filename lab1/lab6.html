@@ -1,0 +1,16 @@
+﻿<html>
+    <body>
+        <script language="JavaScript" type="text/JavaScript">
+            document.writeln("<table id='table' border='2'>");
+            document.writeln("<tr><td>2 в степени</td><td>Результат</td></tr>");
+            var degree=0;
+            var result=1;
+            for (var i=0; i<11; i++){
+                document.writeln(`<tr><td>${degree}</td><td>${result}</td></tr>`);
+                degree++;
+                result*=2;
+            }
+            document.writeln("</table>");
+        </script>
+    </body>
+</html>

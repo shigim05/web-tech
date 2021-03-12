@@ -1,0 +1,20 @@
+﻿<html>
+    <script language="JavaScript">
+        function ab(){
+            if (confirm("Начать заново?")){
+                alert("Не надоело?");
+            }
+            else{
+                alert("Ну и правильно!");
+            }
+        }
+    </script>
+    <body onload="ab();">
+        <p> Ваше имя? </p>
+        <p id="name"></p>
+        <script language="JavaScript">
+            let name=prompt("Введите своё имя","Введите имя");
+            document.getElementById("name").innerHTML=name;
+        </script>
+    </body>
+</html>
