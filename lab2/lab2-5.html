@@ -1,0 +1,53 @@
+<html>
+ <head>
+ <title>Задание 5</title>
+ <script src="jquery-3.6.0.min.js">
+</script>
+</head>
+<body style="background-color:e8ccff">
+<body>
+<form>
+<div class="drag">
+<div id="mir">
+<img src="https://cdn.photosight.ru/img/c/5d8/5054824_large.jpg" height="300" width="450" ></img>
+</div>
+</div>
+</form>
+<script>
+	let mir = document.getElementById('mir'); 
+	mir.onmousedown = function(e) { 
+	    let coords = getCoords(mir); 
+	    let shiftX = e.pageX - coords.left; 
+	    let shiftY = e.pageY - coords.top; 
+	    mir.style.position = 'absolute'; 
+	    document.body.appendChild(mir); 
+        moveAt(e); 
+	    mir.style.zIndex = 1000;
+	        function moveAt(e) { 
+	        mir.style.left = e.pageX - shiftX + 'px'; 
+	        mir.style.top = e.pageY - shiftY + 'px'; 
+	        } 
+	        document.onmousemove = function(e) { 
+	        moveAt(e); 
+	        }; 
+	        mir.onmouseup = function() { 
+	        document.onmousemove = null; 
+	        mir.onmouseup = null; 
+	        }; 
+	} 
+	mir.ondragstart = function() { 
+	    return false; 
+	    }; 
+	function getCoords(elem) { 
+	    let box = elem.getBoundingClientRect(); 
+	    return { 
+	    top: box.top + pageYOffset, 
+	    left: box.left + pageXOffset 
+        }; 
+    } 
+</script>
+</p>
+<p>Схватите картинку и перетащите</p>
+<p><button style='color: blue' onclick="window.location.href='index.html'">Вернуться к списку заданий </button></p>
+</body>
+</html> 

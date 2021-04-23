@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>Задание 2</title>
+    <script language="JavaScript"> 
+        function doSend(){
+            var pas=document.user.e.value.indexOf("@",1);
+            if(document.user.name.value==""){
+                alert('заполните имя');
+                document.user.name.style.borderColor="#FF0000";
+            }
+            else if(document.user.pass.value==""){
+                document.user.name.style.borderColor="#000000";
+                alert('напишите пароль');
+                document.user.pass.style.borderColor="#FF0000";
+            }
+            else if(document.user.pass.value.length<4){
+                document.user.name.style.borderColor="#000000";
+                alert('пароль меньше 4-х символов');
+                document.user.pass.style.borderColor="#FF0000";
+            }
+            else if(document.user.podpass.value==""){
+                document.user.name.style.borderColor="#000000";
+                document.user.pass.style.borderColor="#000000";
+                alert('подтвердите пароль');
+                document.user.podpass.style.borderColor="#FF0000";
+            }
+            else if(document.user.podpass.value!=document.user.pass.value){
+                document.user.name.style.borderColor="#000000";
+                alert('пароли не совпадают');
+                document.user.pass.style.borderColor="#FF0000";
+                document.user.podpass.style.borderColor="#FF0000";
+            }
+            else if(document.user.e.value==""){
+                document.user.name.style.borderColor="#000000";
+                document.user.pass.style.borderColor="#000000";
+                document.user.podpass.style.borderColor="#000000";
+                alert('заполните почту'); 
+                document.user.e.style.borderColor="#FF0000";
+            }
+            else if(pas==-1){
+                document.user.name.style.borderColor="#000000";
+                document.user.pass.style.borderColor="#000000";
+                document.user.podpass.style.borderColor="#000000";
+                alert('e-mail указан неверно');
+                document.user.e.style.borderColor="#FF0000";
+            }
+            else if(document.user.text.value==""){
+                document.user.name.style.borderColor="#000000";
+                document.user.pass.style.borderColor="#000000";
+                document.user.podpass.style.borderColor="#000000";
+                document.user.e.style.borderColor="#000000";
+                alert('поле сообщения не заполнено');
+                document.user.text.style.borderColor="#FF0000";
+            }
+            else if(document.user.text.value.length<10){
+                document.user.name.style.borderColor="#000000";
+                document.user.pass.style.borderColor="#000000";
+                document.user.podpass.style.borderColor="#000000";
+                document.user.e.style.borderColor="#000000";
+                alert('сообщение меньше 10 символов');
+                document.user.text.style.borderColor="#FF0000";
+            }
+            else{ 
+                document.user.submit();
+            }
+        }
+    </script>
+  </head>
+  <body>
+    <p><b>Заполните следующие данные:</b><br><br>
+    <form name="user">
+        Имя * <input type="text" name="name" size="35"><br> 
+        Пароль * <input type="text" name="pass" size="32"><br>
+        Подтверждение пароля * <input type="text" name="podpass" size="17"><br> 
+        Email * <input type="text" name="e" size="48"><br>
+        Тема сообщения <input type="text" name="tema" size="39"><br>
+        Сообщение  <input type="textarea" name="text" size="44"><br>
+        <font size=4>*-поля, отмеченные звездочкой, обязательны к заполнению</font><br><br>
+        <input type="button" value="Отправить" onClick="doSend()">
+        <input type="reset" value="Очистить">
+      </form>
+    </p>
+    <p><button style='color: blue' onclick="window.location.href='index.html'">Вернуться к списку заданий </button></p>
+  </body>
+</html>

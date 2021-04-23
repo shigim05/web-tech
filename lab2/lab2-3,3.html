@@ -1,0 +1,31 @@
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <title>Задание 3</title>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script language="JavaScript"> 
+	    function left(){
+	    $("#lilac").css("position", "relative");
+	    $("#lilac").animate({right: "+=100px", 'width': '-=0px'}, 100);}
+	    function right(){
+	    $("#lilac").css("position", "relative");
+	    $("#lilac").animate({right: "-=100px", 'width': '-=0px'}, 100);}
+	    function up(){
+	    $("#lilac").css("position", "relative");
+	    $("#lilac").animate({top: "-=100px", 'height': '-=0px'}, 100);}
+	    function down(){
+	    $("#lilac").css("position", "relative");
+	    $("#lilac").animate({top: "+=100px", 'height': '-=0px'}, 100);}
+    </script>
+    </head>
+    <body style="background-color:e8ccff">
+<body>
+<p><input type="button" value="Влево" onClick="left()"><br>
+<br><input type="reset" value="Вправо" onClick="right()"><br>
+<br><input type="reset" value="Вверх" onClick="up()"><br>
+<br><input type="reset" value="Вниз" onClick="down()"></p>
+<p><img id="lilac" src="https://cdn.photosight.ru/img/c/5d8/5054824_large.jpg" height="300" width="450" style="margin:100px"></img></p>
+</form></p>
+<p><button style='color: blue' onclick="window.location.href='index.html'">Вернуться к списку заданий </button></p>
+</body>
+</html>
