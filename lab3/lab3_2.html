@@ -1,0 +1,67 @@
+<html>
+    <title>Какие цветы нравятся?</title>
+    <head>
+        <meta charset = "UTF-8">
+        <style>
+            .button{
+               height: 50px;
+               display:block;
+               position: relative;
+               margin:0 auto;
+            }
+        </style>
+    </head>
+    <body align='center' style="background-color: cornsilk;">
+        <h1>Какие цветы нравятся?</h1>
+        <form name="review_form" style="background-color: bisque;">
+            <div style="font-size: 20px;">Ваше имя</div>
+            <input name="name" type="text">
+            <div style="font-size: 20px;">Ваша почта</div>
+            <input name="email" type="text">
+            <div style="font-size: 20px;">Ваш отзыв</div>
+            <input name="review" type="text">
+            <p><input type="button" style="height: 50px;" value="Оставить отзыв" onclick="send_review();"></p>
+        </form>
+        <h1>Все отзывы</h1>
+        <section id="all_reviews" style="background-color: rgb(202, 200, 147);"></section>
+    </body>
+
+    <script language="JavaScript" src="jquery.js"></script>
+    <script language="JavaScript">
+        get_reviews();
+
+        function send_review() {
+            var name = document.review_form.name.value;
+            var email = document.review_form.email.value;
+            var review = document.review_form.review.value;
+
+            if (length(name)==0 || length(email)==0 || length(review)==0){
+                alert("Заполните все поля");
+                return;
+            }
+            $.ajax({
+                type: "GET",
+                url: "add_review.php?name=" + name + "&email=" + email + "&review=" + review,
+                dataType: "html",
+                success: function(data){
+                    alert("Ваш обзор отправлен");
+                    get_reviews();
+                }
+            });
+        }
+        function get_reviews() {
+            $.ajax({
+                type: "GET",
+                url: "get_reviews.php",
+                dataType: "html",
+                success: function(data){document.getElementById("all_reviews").innerHTML = data;}
+            });
+        }
+        function length(str){
+            var strIter = str[Symbol.iterator]();
+            let str_lenght = 0;
+            for (let ch of strIter){str_lenght++;}
+            return str_lenght;
+        }
+    </script>
+</html>

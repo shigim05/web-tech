@@ -1,0 +1,33 @@
+<html>
+    <title>Новости</title>
+    <head>
+        <meta charset = "UTF-8">
+    </head>
+    <body align="center" style="background-color: cornsilk;">
+        <section id="news"></section>
+        <input style="background-color: aqua;height: 50px;font-size: 24px;" type="button" value="Загрузить ещё" onclick="upload();">
+    </body>
+
+    <script language="JavaScript" src="jquery.js"></script>
+    <script language="JavaScript">
+        var loaded = 0;
+        var need_to_load = 3;
+
+        upload();
+
+        function upload() {
+            // Запрос
+            $.ajax({
+                type: "GET",
+                url: "get_news.php",
+                data: "loaded=" + loaded + "&need_to_load=" + need_to_load,
+                dataType: "html",
+                success: function(data){
+                    document.getElementById("news").innerHTML += data;
+                    loaded += need_to_load;
+                    need_to_load = 2;
+                }
+            });
+        }
+    </script>
+</html>
