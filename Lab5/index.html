@@ -1,0 +1,208 @@
+<html>
+    <title>Найди пару</title>
+    <head>
+        <meta charset = "UTF-8">
+        <link rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.min.css">
+        <script src="jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+        <script src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    </head>
+    <body align = "center">
+       <h1>Найди пару</h1>
+
+        <p><game id="game"></game></p>
+
+        <p><button id ='button' onclick="button_click();">Начать</button></p>
+
+        <script language="JavaScript">
+            (function( $ ){
+                var opened = false;
+                var opened_r = 0;
+                var opened_c = 0;
+
+                var end_game_func;
+
+                var game_field;
+
+                var score = 0;
+
+                var field = [
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                ];
+
+                var pairs = 0;
+
+                $.fn.game = function(option, arg1, arg2, args3) {
+                    if (option == "create"){
+                        game_field = this[0];
+                        end_game_func = arg1;
+
+                        create();
+                        restart();
+                    }
+                    else if (option == 'start'){
+                        start();
+                    }
+                    else if (option == 'restart'){
+                        restart();
+                    }
+                    else if (option == "open"){
+                        open(arg1, arg2, args3);
+                    }
+                };
+
+                function set_cards(){
+                    let size = field.length * field[0].length;
+
+                    var ids = [];
+
+                    for (var i = 0; i < size; i++){
+                        ids.push(i);
+                    }
+
+                    for (var i = 0; i < size; i+=2){
+                        var array_id = Math.floor(Math.random() * ids.length);
+
+                        var id = ids.splice(array_id, 1)[0];
+
+                        var r = Math.floor(id/field[0].length);
+                        var c = id%field[0].length;
+
+                        field[r][c] = array_id;
+
+                        array_id = Math.floor(Math.random() * ids.length);
+                        id = ids.splice(array_id, 1)[0];
+
+                        var r2 = Math.floor(id/field[0].length);
+                        var c2 = id%field[0].length;
+
+                        field[r2][c2] = field[r][c];
+                    }
+                }
+
+                function create(){
+                    var tbdy = document.createElement('tbody');
+                    for (var i = 0; i < field.length; i++){
+                        var tr = document.createElement('tr');
+                        for (var d = 0; d < field[0].length; d++){
+                            var td = document.createElement('td');
+
+                            td.id = i * field[0].length + d;
+                            td.align = "center";
+                            td.style = "border:0px;width:40px;height:70px;font-size:20px";
+
+                            tr.appendChild(td);
+                        }
+                        tbdy.appendChild(tr);
+                    }
+                    game_field.appendChild(tbdy);
+                }
+
+                function start(){
+                    for (var i = 0; i < field.length; i++){
+                        for (var d = 0; d < field[0].length; d++){
+                            var id = i * field[0].length + d;
+                            var cell = document.getElementById(id);
+                            cell.innerHTML = `<img src='cover.png' style='width:40px;height:70px;' onclick="$('#game').game('open', ${i}, ${d}, ${id});">`;
+                        }
+                    }
+                }
+
+                function restart(){
+                    field = [
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                        [0,0,0,0,0,0,0,0,0,0],
+                    ];
+                    pairs = field.length * field[0].length/2
+
+                    set_cards();
+
+                    for (var i = 0; i < field.length; i++){
+                        for (var d = 0; d < field[0].length; d++){
+                            var cell = document.getElementById(i * field[0].length + d);
+                            cell.style.backgroundColor = 'FFFFFF';
+                            cell.innerHTML = field[i][d];
+                        }
+                    }
+                }
+
+                function open(r, c, id){
+                    if (opened){
+                        opened = false;
+                        if (field[r][c] == field[opened_r][opened_c]){
+                            score++;
+                            document.getElementById(id).style.backgroundColor = '00FF00';
+                            document.getElementById(id).innerHTML = field[r][c];
+                            document.getElementById(opened_r * field[0].length + opened_c).style.backgroundColor = '00FF00';
+                        }
+                        else{
+                            document.getElementById(id).style.backgroundColor = 'FF0000';
+                            document.getElementById(id).innerHTML = field[r][c];
+                            document.getElementById(opened_r * field[0].length + opened_c).style.backgroundColor = 'FF0000';
+                        }
+                        pairs--;
+                        field[r][c] = 0;
+                        field[opened_r][opened_c] = 0;
+
+                        if (pairs == 0){
+                            if (end_game_func == null){
+                                end_game_func(score);
+                            }
+                        }
+                    }
+                    else{
+                        opened = true;
+                        opened_r = r;
+                        opened_c = c;
+
+                        document.getElementById(id).innerHTML = field[r][c];
+                    }
+                }
+            })(jQuery);
+
+            $("#game").game('create', end_game);
+
+            $("#end_dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    "Начать сначала": function() {
+                        $(this).dialog("close");
+                        document.location.reload();
+                    }
+                }
+            });
+
+            function end_game(score){
+                var score_dialog = document.getElementById("score");
+                score_dialog.innerHTML += score;
+                $("#end_dialog").dialog("open");
+            }
+
+            var restart = false;
+            function button_click(){
+                if (restart){
+                    document.getElementById("button").innerHTML = 'Старт';
+                    $("#game").game('restart');
+                }
+                else{
+                    document.getElementById("button").innerHTML = 'Начать заново';
+                    $("#game").game('start');
+                }
+                restart = !restart;
+            }
+        </script>
+    </body>
+</html>
